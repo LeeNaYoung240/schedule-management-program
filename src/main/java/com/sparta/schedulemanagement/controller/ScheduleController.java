@@ -12,23 +12,21 @@ import java.util.List;
 @RequestMapping("/api")
 public class ScheduleController {
 
-    private final JdbcTemplate jdbcTemplate;
+    private final ScheduleService scheduleService;
 
     public ScheduleController(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+        this.scheduleService = new ScheduleService(jdbcTemplate);
     }
 
     // 일정 등록
     @PostMapping("/schedule")
     public ScheduleResponseDto createSchedule(@RequestBody ScheduleRequestDto requestDto) {
-        ScheduleService scheduleService = new ScheduleService(jdbcTemplate);
         return scheduleService.createSchedule(requestDto);
     }
 
     // 선택 일정 조회
     @GetMapping("/schedule/{scheduleId}")
     public ScheduleResponseDto getSchedule(@PathVariable Long scheduleId) {
-        ScheduleService scheduleService = new ScheduleService(jdbcTemplate);
         return scheduleService.getSchedule(scheduleId);
 
     }
@@ -36,14 +34,12 @@ public class ScheduleController {
     // 전체 일정 조회
     @GetMapping("/schedule")
     public List<ScheduleResponseDto> getAllSchedule() {
-        ScheduleService scheduleService = new ScheduleService(jdbcTemplate);
         return scheduleService.getAllSchedule();
     }
 
     // 선택 일정 수정
     @PutMapping("/schedule/{scheduleId}")
     public ScheduleResponseDto updateSchedule(@PathVariable Long scheduleId, @RequestBody ScheduleRequestDto requestDto, @RequestParam String password) {
-        ScheduleService scheduleService = new ScheduleService(jdbcTemplate);
         return scheduleService.updateSchedule(scheduleId, requestDto, password);
 
     }
@@ -51,7 +47,6 @@ public class ScheduleController {
     // 선택 일정 삭제
     @DeleteMapping("/schedule/{scheduleId}")
     public Long deleteSchedule(@PathVariable Long scheduleId, @RequestParam String password) {
-        ScheduleService scheduleService = new ScheduleService(jdbcTemplate);
         return scheduleService.deleteSchedule(scheduleId, password);
 
     }
