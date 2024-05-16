@@ -78,4 +78,19 @@ public class ScheduleController {
         responseDto.setPassword("-");
         return responseDto;
     }
+    // 선택 일정 삭제
+    @DeleteMapping("/schedule/{scheduleId}")
+    public Long deleteSchedule(@PathVariable Long scheduleId,  @RequestParam String password) {
+        Schedule schedule = scheduleList.get(scheduleId);
+        if (schedule == null) {
+            throw new IllegalArgumentException("선택한 일정은 존재하지 않습니다.");
+        }
+        // 비밀번호 체크
+        if (!schedule.getPassword().equals(password)) {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
+        // 해당 일정 삭제
+        scheduleList.remove(scheduleId);
+        return scheduleId;
+    }
 }
