@@ -4,7 +4,6 @@ import com.sparta.schedulemanagement.dto.ScheduleRequestDto;
 import com.sparta.schedulemanagement.dto.ScheduleResponseDto;
 import com.sparta.schedulemanagement.entity.Schedule;
 import com.sparta.schedulemanagement.repository.ScheduleRepository;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
 
@@ -12,8 +11,8 @@ public class ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
 
-    public ScheduleService(JdbcTemplate jdbcTemplate) {
-        this.scheduleRepository = new ScheduleRepository(jdbcTemplate);
+    public ScheduleService(ScheduleRepository scheduleRepository) {
+        this.scheduleRepository = scheduleRepository;
     }
 
     // 일정 등록
