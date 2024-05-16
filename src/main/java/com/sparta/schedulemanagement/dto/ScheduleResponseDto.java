@@ -25,8 +25,13 @@ public class ScheduleResponseDto {
         this.password = schedule.getPassword();
         this.date = schedule.getDate();
     }
-    // 비밀번호 설정
-    public void setPassword(Object password) {
-        this.password = (String) password;
+
+    public ScheduleResponseDto(Long id, String title, String contents, String manager, String date, String s) {
+        this.id = id;
+        this.title = title;
+        this.contents = contents;
+        this.manager = manager;
+        this.date = date;
     }
+
 }
