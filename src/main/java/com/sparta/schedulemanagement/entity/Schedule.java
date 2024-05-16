@@ -1,30 +1,50 @@
 package com.sparta.schedulemanagement.entity;
 
 import com.sparta.schedulemanagement.dto.ScheduleRequestDto;
+import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+@Entity
 @Getter
 @Setter
-/**
- * 일정의 id, 제목, 내용, 담당자, 비밀번호, 작성일, id는 자동 부여
- */
+@Table(name = "schedule")
+@NoArgsConstructor
 public class Schedule {
-    private Long id;
-    private String title;
-    private String contents;
-    private String manager;
-    private String password;
-    private String date;
-    private boolean deleted;
 
-    // 생성자를 통한 객체 생성
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "title",nullable = true, length = 500)
+    private String title;
+
+    @Column(name = "contents",nullable = true)
+    private String contents;
+
+    @Column(name = "manager",nullable = true)
+    private String manager;
+
+    @Column(name = "password",nullable = true)
+    private String password;
+
+    @Column(name = "date", nullable = true)
+    private LocalDate date;
+
     public Schedule(ScheduleRequestDto requestDto) {
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContents();
         this.manager = requestDto.getManager();
         this.password = requestDto.getPassword();
         this.date = requestDto.getDate();
+    }
+
+    public void update(ScheduleRequestDto requestDto) {
+        this.title = requestDto.getTitle();
+        this.contents = requestDto.getContents();
+        this.manager = requestDto.getManager();
     }
 
 

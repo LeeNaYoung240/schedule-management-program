@@ -27,7 +27,6 @@ public class ScheduleController {
     @GetMapping("/schedule/{scheduleId}")
     public ScheduleResponseDto getSchedule(@PathVariable Long scheduleId) {
         return scheduleService.getSchedule(scheduleId);
-
     }
 
     // 전체 일정 조회
@@ -38,15 +37,13 @@ public class ScheduleController {
 
     // 선택 일정 수정
     @PutMapping("/schedule/{scheduleId}")
-    public ScheduleResponseDto updateSchedule(@PathVariable Long scheduleId, @RequestBody ScheduleRequestDto requestDto, @RequestParam String password) {
-        return scheduleService.updateSchedule(scheduleId, requestDto, password);
-
+    public ScheduleResponseDto updateSchedule(@PathVariable Long scheduleId, @RequestBody ScheduleRequestDto requestDto) {
+        return scheduleService.updateSchedule(scheduleId, requestDto, requestDto.getPassword());
     }
 
     // 선택 일정 삭제
     @DeleteMapping("/schedule/{scheduleId}")
-    public Long deleteSchedule(@PathVariable Long scheduleId, @RequestParam String password) {
-        return scheduleService.deleteSchedule(scheduleId, password);
-
+    public Long deleteSchedule(@PathVariable Long scheduleId, @RequestBody ScheduleRequestDto requestDto) {
+        return scheduleService.deleteSchedule(scheduleId, requestDto.getPassword());
     }
 }

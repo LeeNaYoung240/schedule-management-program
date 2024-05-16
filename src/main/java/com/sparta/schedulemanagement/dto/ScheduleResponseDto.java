@@ -4,6 +4,8 @@ import com.sparta.schedulemanagement.entity.Schedule;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 /*
@@ -14,24 +16,14 @@ public class ScheduleResponseDto {
     private String title;
     private String contents;
     private String manager;
-    private String password;
-    private String date;
+    private LocalDate date;
 
     public ScheduleResponseDto(Schedule schedule) {
         this.id = schedule.getId();
         this.title = schedule.getTitle();
         this.contents = schedule.getContents();
         this.manager = schedule.getManager();
-        this.password = schedule.getPassword();
         this.date = schedule.getDate();
-    }
-
-    public ScheduleResponseDto(Long id, String title, String contents, String manager, String date, String s) {
-        this.id = id;
-        this.title = title;
-        this.contents = contents;
-        this.manager = manager;
-        this.date = date;
     }
 
 }
