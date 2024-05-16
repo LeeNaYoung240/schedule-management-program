@@ -3,10 +3,7 @@ package com.sparta.schedulemanagement.controller;
 import com.sparta.schedulemanagement.dto.ScheduleRequestDto;
 import com.sparta.schedulemanagement.dto.ScheduleResponseDto;
 import com.sparta.schedulemanagement.entity.Schedule;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -34,5 +31,18 @@ public class ScheduleController {
         //비밀번호 설정하여 반환
         scheduleResponseDto.setPassword("-");
         return scheduleResponseDto;
+    }
+    // 선택 일정 조회
+    @GetMapping("/schedule/{scheduleId}")
+    public ScheduleResponseDto getSchedule(@PathVariable Long scheduleId) {
+        Schedule schedule = scheduleList.get(scheduleId);
+        if(schedule == null) {
+            throw new IllegalArgumentException("선택한 일정은 존재하지 않습니다.");
+        }
+        // 비밀번호를 제외하고 반환
+        ScheduleResponseDto responseDto = new ScheduleResponseDto(schedule);
+        responseDto.setPassword("-");
+
+        return responseDto;
     }
 }

@@ -29,5 +29,4 @@ public class ScheduleResponseDto {
     public void setPassword(Object password) {
         this.password = (String) password;
     }
-
 }

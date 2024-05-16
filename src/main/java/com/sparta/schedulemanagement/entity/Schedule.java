@@ -25,4 +25,13 @@ public class Schedule {
         this.password = requestDto.getPassword();
         this.date = requestDto.getDate();
     }
+
+    // 객체의 정보 업데이트
+    public void update(ScheduleRequestDto requestDto) {
+        this.title = requestDto.getTitle();
+        this.contents = requestDto.getContents();
+        this.manager = requestDto.getManager();
+        this.password = requestDto.getPassword();
+        this.date = requestDto.getDate();
+    }
 }
