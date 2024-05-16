@@ -59,4 +59,23 @@ public class ScheduleController {
 
         return scheduleResponseDtoList;
     }
+    // 선택 일정 수정
+    @PutMapping("/schedule/{scheduleId}")
+    public ScheduleResponseDto updateSchedule(@PathVariable Long scheduleId, @RequestBody ScheduleRequestDto requestDto, @RequestParam String password) {
+        Schedule schedule = scheduleList.get(scheduleId);
+        if (schedule == null) {
+            throw new IllegalArgumentException("선택한 일정은 존재하지 않습니다.");
+        }
+        // 비밀번호 체크
+        if (!schedule.getPassword().equals(password)) {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
+        // 수정할 정보 업데이트
+        schedule.update(requestDto);
+
+        // 비밀번호를 제외하고 반환
+        ScheduleResponseDto responseDto = new ScheduleResponseDto(schedule);
+        responseDto.setPassword("-");
+        return responseDto;
+    }
 }
