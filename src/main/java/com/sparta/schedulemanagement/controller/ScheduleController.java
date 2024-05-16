@@ -43,17 +43,28 @@ public class ScheduleController {
         ScheduleResponseDto responseDto = new ScheduleResponseDto(schedule);
         responseDto.setPassword("-");
 
+        // 이미 삭제된 일정인지 확인
+        if(schedule.isDeleted())
+        {
+            throw new IllegalArgumentException("이미 삭제된 일정입니다. ");
+        }
+        // 해당 일정 삭제
+        schedule.setDeleted(true);
+
         return responseDto;
     }
     // 전체 일정 조회
     @GetMapping("/schedule")
     public List<ScheduleResponseDto> getAllSchedule() {
         // Map To List
-        List<ScheduleResponseDto> scheduleResponseDtoList = new ArrayList<>(scheduleList.values().stream().map(schedule -> {
-            ScheduleResponseDto responseDto = new ScheduleResponseDto(schedule);
-            responseDto.setPassword("-");
-            return responseDto;
-        }).toList());
+        List<ScheduleResponseDto> scheduleResponseDtoList = new ArrayList<>(scheduleList.values().stream()
+                .filter(schedule -> !schedule.isDeleted()) // 삭제되지 않은 일정만 필터링
+                .map(schedule -> {
+                    ScheduleResponseDto responseDto = new ScheduleResponseDto(schedule);
+                    responseDto.setPassword("-");
+                    return responseDto;
+                })
+                .toList());
         // 내림차순 정렬
         Collections.sort(scheduleResponseDtoList, (date1, date2) -> date2.getDate().compareTo(date1.getDate()));
 
@@ -89,8 +100,13 @@ public class ScheduleController {
         if (!schedule.getPassword().equals(password)) {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
+        // 이미 삭제된 일정인지 확인
+        if(schedule.isDeleted())
+        {
+            throw new IllegalArgumentException("이미 삭제된 일정입니다. ");
+        }
         // 해당 일정 삭제
-        scheduleList.remove(scheduleId);
+        schedule.setDeleted(true);
         return scheduleId;
     }
 }

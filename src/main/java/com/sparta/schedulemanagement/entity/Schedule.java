@@ -16,6 +16,7 @@ public class Schedule {
     private String manager;
     private String password;
     private String date;
+    private boolean deleted;
 
     // 생성자를 통한 객체 생성
     public Schedule(ScheduleRequestDto requestDto) {
