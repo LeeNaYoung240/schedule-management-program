@@ -45,4 +45,18 @@ public class ScheduleController {
 
         return responseDto;
     }
+    // 전체 일정 조회
+    @GetMapping("/schedule")
+    public List<ScheduleResponseDto> getAllSchedule() {
+        // Map To List
+        List<ScheduleResponseDto> scheduleResponseDtoList = new ArrayList<>(scheduleList.values().stream().map(schedule -> {
+            ScheduleResponseDto responseDto = new ScheduleResponseDto(schedule);
+            responseDto.setPassword("-");
+            return responseDto;
+        }).toList());
+        // 내림차순 정렬
+        Collections.sort(scheduleResponseDtoList, (date1, date2) -> date2.getDate().compareTo(date1.getDate()));
+
+        return scheduleResponseDtoList;
+    }
 }
