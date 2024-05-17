@@ -50,6 +50,9 @@ public class ScheduleService {
         if(schedule.getPassword().equals(password)) {
             schedule.update(requestDto);
         }
+        else{
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
         ScheduleResponseDto scheduleResponseDto = new ScheduleResponseDto(schedule);
         return scheduleResponseDto;
     }

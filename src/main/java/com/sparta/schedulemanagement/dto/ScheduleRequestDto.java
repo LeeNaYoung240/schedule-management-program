@@ -3,6 +3,7 @@ package com.sparta.schedulemanagement.dto;
 import lombok.Getter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * 사용자가 등록할 제목, 내용, 담당자, 비밀번호, 작성일
@@ -14,7 +15,4 @@ public class ScheduleRequestDto {
     private String contents;
     private String manager;
     private String password;
-    private LocalDate date;
-
-
 }

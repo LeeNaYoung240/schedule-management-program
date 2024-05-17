@@ -7,12 +7,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @Setter
 @Table(name = "schedule")
 @NoArgsConstructor
-public class Schedule {
+public class Schedule extends Timestamped{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,7 +40,7 @@ public class Schedule {
         this.contents = requestDto.getContents();
         this.manager = requestDto.getManager();
         this.password = requestDto.getPassword();
-        this.date = requestDto.getDate();
+        this.date = LocalDate.now();
     }
 
     public void update(ScheduleRequestDto requestDto) {
@@ -46,6 +48,5 @@ public class Schedule {
         this.contents = requestDto.getContents();
         this.manager = requestDto.getManager();
     }
-
 
 }
