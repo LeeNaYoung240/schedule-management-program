@@ -128,5 +128,20 @@ https://github.com/LeeNaYoung240/schedule-management-program/assets/107848521/ae
 </div>
 </details>
 
+## 🩹 개선 사항
 
+</div>
+</details>
+
+<details>
+<summary>개선 사항</summary>
+<div markdown="1">
+
+![image](https://github.com/LeeNaYoung240/schedule-management-program/assets/107848521/3b38de04-20ae-4fc9-9b47-ad3a749ea8f7)
+
+- JPA Auditing 적용하여 date 자동으로 저장되게 변환
+
+  
+</div>
+</details>
 
