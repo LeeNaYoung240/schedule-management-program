@@ -12,8 +12,10 @@
 ## 🗳 Tech Stack
 -   **언어**  : Java
 -   **버전** : JDK17
--   **Tools** : IntelliJ IDEA, GitHub
--   **DB**: MySQL 8.0
+-   **Tools** : GitHub, Git
+-   **IDE** : IntelliJ IDEA
+-   **DB**: MySQL 8.0.37
+-   **Framework** : SpringBoot 3.2.5
 
 <br>
 
