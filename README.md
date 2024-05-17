@@ -14,7 +14,7 @@
 -   **버전** : JDK17
 -   **Tools** : GitHub, Git
 -   **IDE** : IntelliJ IDEA
--   **DB**: MySQL 8.0.37
+-   **DB**: MySQL 8.0.28
 -   **Framework** : SpringBoot 3.2.5
 
 <br>
