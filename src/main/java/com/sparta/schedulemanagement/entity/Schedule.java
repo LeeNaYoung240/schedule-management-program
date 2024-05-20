@@ -2,16 +2,14 @@ package com.sparta.schedulemanagement.entity;
 
 import com.sparta.schedulemanagement.dto.ScheduleRequestDto;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Setter
 @Table(name = "schedule")
 @NoArgsConstructor
 public class Schedule extends Timestamped{
@@ -35,6 +33,7 @@ public class Schedule extends Timestamped{
     @Column(name = "date", nullable = true)
     private LocalDate date;
 
+    @Builder
     public Schedule(ScheduleRequestDto requestDto) {
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContents();
