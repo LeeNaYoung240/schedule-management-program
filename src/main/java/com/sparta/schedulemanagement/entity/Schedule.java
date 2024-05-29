@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -18,20 +20,23 @@ public class Schedule extends Timestamped{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "title",nullable = true, length = 500)
+    @Column(name = "title",nullable = false, length = 500)
     private String title;
 
-    @Column(name = "contents",nullable = true)
+    @Column(name = "contents",nullable = false)
     private String contents;
 
-    @Column(name = "manager",nullable = true)
+    @Column(name = "manager",nullable = false)
     private String manager;
 
-    @Column(name = "password",nullable = true)
+    @Column(name = "password",nullable = false)
     private String password;
 
-    @Column(name = "date", nullable = true)
-    private LocalDate date;
+    @Column(name = "date", nullable = false)
+    private LocalDate date = LocalDate.now();
+
+    @OneToMany(mappedBy = "schedule")
+    private List<Comment> commentList = new ArrayList<>();
 
     @Builder
     public Schedule(ScheduleRequestDto requestDto) {

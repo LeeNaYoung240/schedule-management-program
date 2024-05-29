@@ -5,28 +5,21 @@ import com.sparta.schedulemanagement.dto.ScheduleResponseDto;
 import com.sparta.schedulemanagement.entity.Schedule;
 import com.sparta.schedulemanagement.repository.ScheduleRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
 
-    public ScheduleService(ScheduleRepository scheduleRepository) {
-        this.scheduleRepository = scheduleRepository;
-    }
-
     // 일정 등록
     public ScheduleResponseDto createSchedule(ScheduleRequestDto requestDto) {
-        // RequestDto -> Entity
-        Schedule schedule = new Schedule(requestDto);
-        // DB 저장
-        Schedule saveSchedule = scheduleRepository.save(schedule);
-        // Entity -> ResponseDto
-        ScheduleResponseDto scheduleResponseDto = new ScheduleResponseDto(saveSchedule);
-        return scheduleResponseDto;
+        Schedule schedule = scheduleRepository.save(new Schedule(requestDto));
+        return new ScheduleResponseDto(schedule);
     }
 
     // 선택 일정 조회
@@ -53,8 +46,7 @@ public class ScheduleService {
         else{
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
-        ScheduleResponseDto scheduleResponseDto = new ScheduleResponseDto(schedule);
-        return scheduleResponseDto;
+        return new ScheduleResponseDto(schedule);
     }
     @Transactional
     //선택 일정 삭제

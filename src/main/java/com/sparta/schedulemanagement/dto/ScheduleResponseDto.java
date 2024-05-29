@@ -2,13 +2,12 @@ package com.sparta.schedulemanagement.dto;
 
 import com.sparta.schedulemanagement.entity.Schedule;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Getter
-/*
- *   사용자에게 반환할 id, 제목, 내용, 담당자, 작성일
- */
+@NoArgsConstructor
 public class ScheduleResponseDto {
     private Long id;
     private String title;
