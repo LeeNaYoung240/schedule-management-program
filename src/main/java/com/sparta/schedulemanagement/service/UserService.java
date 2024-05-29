@@ -1,10 +1,13 @@
 package com.sparta.schedulemanagement.service;
 
 
+import com.sparta.schedulemanagement.dto.LoginRequestDto;
 import com.sparta.schedulemanagement.dto.SignupRequestDto;
 import com.sparta.schedulemanagement.entity.User;
 import com.sparta.schedulemanagement.entity.UserRoleEnum;
+import com.sparta.schedulemanagement.jwt.JwtUtil;
 import com.sparta.schedulemanagement.repository.UserRepository;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +19,7 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final JwtUtil jwtUtil;
 
     // ADMIN_TOKEN
     private final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
@@ -44,5 +48,24 @@ public class UserService {
         // 사용자 등록
         User user = new User(username, requestDto.getNickname(), requestDto.getPassword(), role);
         userRepository.save(user);
+    }
+
+    public void login(LoginRequestDto requestDto, HttpServletResponse res) {
+        String username = requestDto.getUsername();
+        String password = requestDto.getPassword();
+
+        // 사용자 확인
+        User user = userRepository.findByUsername(username).orElseThrow(
+                ()-> new IllegalArgumentException("등록된 사용자가 없습니다.")
+        );
+
+        // 비밀번호 확인
+        if(password.equals(user.getPassword())) {
+            String token = jwtUtil.createToken(user.getUsername(),user.getRole());
+            jwtUtil.addJwtToCookie(token, res);
+        }
+        else{
+            throw new IllegalArgumentException("비밀번호를 다시 입력하세요.");
+        }
     }
 }
