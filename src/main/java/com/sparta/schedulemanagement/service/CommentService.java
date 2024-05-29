@@ -30,11 +30,20 @@ public class CommentService {
 
     @Transactional
     public CommentResponseDto updateComment(Long commentId, CommentModifyRequestDto requestDto) {
-
         Comment comment = commentRepository.findById(commentId).orElseThrow(() ->
                 new IllegalArgumentException("[" + commentId + "]이라는 숫자의 댓글이 선택한 일정에 속하지 않습니다."));
         comment.update(requestDto);
 
         return new CommentResponseDto(comment);
+    }
+
+    @Transactional
+    public String deleteComment(Long commentId) {
+        Comment comment = commentRepository.findById(commentId).orElseThrow(() ->
+                new IllegalArgumentException("[" + commentId + "]이라는 숫자의 댓글이 선택한 일정에 속하지 않습니다."));
+
+        commentRepository.delete(comment);
+
+        return "[" + commentId + "] 번호가 삭제되었습니다";
     }
 }

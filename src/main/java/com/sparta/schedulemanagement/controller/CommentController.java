@@ -27,7 +27,12 @@ public class CommentController {
         return commentService.updateComment(commentId, requestDto);
     }
 
-    @RequestMapping(value = "/", method = {RequestMethod.POST, RequestMethod.PUT})
+    @DeleteMapping("/{commentId}")
+    public String deleteComment(@PathVariable Long commentId) {
+        return commentService.deleteComment(commentId);
+    }
+
+    @RequestMapping(value = "/", method = {RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
     public ResponseEntity<String> handleEmptyIdRequest() {
         return ResponseEntity.badRequest().body("고유번호를 입력하세요");
     }
