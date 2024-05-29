@@ -10,12 +10,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommentRequestDto {
+
     private Long id;
 
     @NotBlank(message = "내용을 입력해 주세요")
     private String commentContents;
 
     @NotBlank(message = "사용자 이름을 입력해 주세요")
-    private String userId;
+    private String username;
 
 }

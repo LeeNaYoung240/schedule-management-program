@@ -1,11 +1,11 @@
 package com.sparta.schedulemanagement.entity;
 
+import com.sparta.schedulemanagement.dto.CommentModifyRequestDto;
 import com.sparta.schedulemanagement.dto.CommentRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -21,8 +21,8 @@ public class Comment extends Timestamped{
     @Column(name = "commentContents",nullable = false)
     private String commentContents;
 
-    @Column(name = "userId",nullable = false)
-    private String userId;
+    @Column(name = "username",nullable = false)
+    private String username;
 
     @Column(name = "date", nullable = false)
     private LocalDateTime date;
@@ -33,10 +33,12 @@ public class Comment extends Timestamped{
 
     public Comment(CommentRequestDto requestDto, Schedule schedule) {
         this.commentContents = requestDto.getCommentContents();
-        this.userId = requestDto.getUserId();
+        this.username = requestDto.getUsername();
         this.date = LocalDateTime.now();
         this.schedule = schedule;
-
     }
 
+    public void update(CommentModifyRequestDto requestDto) {
+        this.commentContents = requestDto.getCommentContents();
+    }
 }

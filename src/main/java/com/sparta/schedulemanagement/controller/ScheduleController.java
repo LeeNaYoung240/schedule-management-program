@@ -5,6 +5,7 @@ import com.sparta.schedulemanagement.dto.ScheduleResponseDto;
 import com.sparta.schedulemanagement.service.ScheduleService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,7 +37,7 @@ public class ScheduleController {
 
     // 선택 일정 수정
     @PutMapping("/{scheduleId}")
-    public ScheduleResponseDto updateSchedule(@PathVariable Long scheduleId, @RequestBody ScheduleRequestDto requestDto) {
+    public ScheduleResponseDto updateSchedule(@PathVariable Long scheduleId, @RequestBody @Valid ScheduleRequestDto requestDto) {
         return scheduleService.updateSchedule(scheduleId, requestDto, requestDto.getPassword());
     }
 
@@ -44,5 +45,10 @@ public class ScheduleController {
     @DeleteMapping("/{scheduleId}")
     public Long deleteSchedule(@PathVariable Long scheduleId, @RequestBody ScheduleRequestDto requestDto) {
         return scheduleService.deleteSchedule(scheduleId, requestDto.getPassword());
+    }
+
+    @RequestMapping(value = "/", method = {RequestMethod.GET, RequestMethod.PUT, RequestMethod.DELETE})
+    public ResponseEntity<String> handleEmptyIdRequest() {
+        return ResponseEntity.badRequest().body("고유번호를 입력하세요");
     }
 }
