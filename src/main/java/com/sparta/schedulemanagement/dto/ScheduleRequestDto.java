@@ -1,5 +1,6 @@
 package com.sparta.schedulemanagement.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,8 +13,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ScheduleRequestDto {
+    @NotBlank(message = "제목을 입력해 주세요")
     private String title;
+    @NotBlank(message = "내용을 입력해 주세요")
     private String contents;
+    @NotBlank(message = "관리자를 입력해 주세요")
     private String manager;
+    @NotBlank(message = "비밀번호를 입력해 주세요")
     private String password;
 }

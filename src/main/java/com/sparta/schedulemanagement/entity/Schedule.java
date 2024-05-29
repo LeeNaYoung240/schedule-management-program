@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class Schedule extends Timestamped{
     private String password;
 
     @Column(name = "date", nullable = false)
-    private LocalDate date = LocalDate.now();
+    private LocalDateTime date;
 
     @OneToMany(mappedBy = "schedule")
     private List<Comment> commentList = new ArrayList<>();
@@ -44,7 +45,7 @@ public class Schedule extends Timestamped{
         this.contents = requestDto.getContents();
         this.manager = requestDto.getManager();
         this.password = requestDto.getPassword();
-        this.date = LocalDate.now();
+        this.date = LocalDateTime.now();
     }
 
     public void update(ScheduleRequestDto requestDto) {
