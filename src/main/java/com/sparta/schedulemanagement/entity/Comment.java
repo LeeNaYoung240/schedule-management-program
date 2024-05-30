@@ -31,14 +31,20 @@ public class Comment extends Timestamped{
     @JoinColumn(name = "schedule_id", nullable = false)
     private Schedule schedule;
 
-    public Comment(CommentRequestDto requestDto, Schedule schedule) {
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    public Comment(CommentRequestDto requestDto, Schedule schedule, User user) {
         this.commentContents = requestDto.getCommentContents();
-        this.username = requestDto.getUsername();
         this.date = LocalDateTime.now();
         this.schedule = schedule;
+        this.user = user;
+        this.username = requestDto.getUsername();
     }
 
-    public void update(CommentModifyRequestDto requestDto) {
+    public void update(CommentModifyRequestDto requestDto, User user) {
         this.commentContents = requestDto.getCommentContents();
+        this.user = user;
     }
 }

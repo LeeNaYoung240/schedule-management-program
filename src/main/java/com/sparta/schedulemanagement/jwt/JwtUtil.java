@@ -5,6 +5,7 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.security.Key;
 import java.util.Base64;
@@ -57,30 +59,6 @@ public class JwtUtil {
                         .compact();
     }
 
-    // JWT Cookie 에 저장
-    public void addJwtToCookie(String token, HttpServletResponse res) {
-        try {
-            token = URLEncoder.encode(token, "utf-8").replaceAll("\\+", "%20"); // Cookie Value 에는 공백이 불가능해서 encoding 진행
-
-            Cookie cookie = new Cookie(AUTHORIZATION_HEADER, token); // Name-Value
-            cookie.setPath("/");
-
-            // Response 객체에 Cookie 추가
-            res.addCookie(cookie);
-        } catch (UnsupportedEncodingException e) {
-            logger.error(e.getMessage());
-        }
-    }
-
-    // JWT 토큰 substring
-    public String substringToken(String tokenValue) {
-        if (StringUtils.hasText(tokenValue) && tokenValue.startsWith(BEARER_PREFIX)) {
-            return tokenValue.substring(7);
-        }
-        logger.error("Not Found Token");
-        throw new NullPointerException("Not Found Token");
-    }
-
     // 토큰 검증
     public boolean validateToken(String token) {
         try {
@@ -103,4 +81,22 @@ public class JwtUtil {
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
     }
 
+    
+    public String getUsernameFromToken(String token) {
+        try {
+            Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
+            return claims.getSubject();
+        } catch (JwtException e) {
+            logger.error("Invalid JWT token: {}", e.getMessage());
+            return null;
+        }
+    }
+
+    public String getJwtFromHeader(HttpServletRequest req) {
+        String authorizationHeader = req.getHeader(AUTHORIZATION_HEADER);
+        if (StringUtils.hasText(authorizationHeader) && authorizationHeader.startsWith(BEARER_PREFIX)) {
+            return authorizationHeader.substring(7);
+        }
+        return null;
+    }
 }

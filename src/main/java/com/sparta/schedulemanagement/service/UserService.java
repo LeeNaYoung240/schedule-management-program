@@ -24,6 +24,7 @@ public class UserService {
     // ADMIN_TOKEN
     private final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
 
+
     public void signup(SignupRequestDto requestDto) {
         String username = requestDto.getUsername();
 
@@ -62,7 +63,7 @@ public class UserService {
         // 비밀번호 확인
         if(password.equals(user.getPassword())) {
             String token = jwtUtil.createToken(user.getUsername(),user.getRole());
-            jwtUtil.addJwtToCookie(token, res);
+            res.addHeader(JwtUtil.AUTHORIZATION_HEADER, token);
         }
         else{
             throw new IllegalArgumentException("비밀번호를 다시 입력하세요.");
