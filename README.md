@@ -16,7 +16,7 @@
 -   **Tools** : GitHub, Git
 -   **IDE** : IntelliJ IDEA
 -   **DB**: MySQL 8.0.28
--   **Framework** : SpringBoot 3.2.5
+-   **Framework** : SpringBoot 3.1.11
 
 <br>
 
