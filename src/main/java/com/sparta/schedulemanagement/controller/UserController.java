@@ -1,5 +1,6 @@
 package com.sparta.schedulemanagement.controller;
 
+import com.sparta.schedulemanagement.dto.ApiResponseDto;
 import com.sparta.schedulemanagement.dto.LoginRequestDto;
 import com.sparta.schedulemanagement.dto.SignupRequestDto;
 import com.sparta.schedulemanagement.service.ScheduleService;
@@ -24,24 +25,27 @@ public class UserController {
     }
 
     @PostMapping("/user/signup")
-    public ResponseEntity<String> signup(@RequestBody @Valid SignupRequestDto requestDto) {
+    public ResponseEntity<ApiResponseDto> signup(@RequestBody @Valid SignupRequestDto requestDto) {
         userService.signup(requestDto);
-        return ResponseEntity.ok("회원가입 성공🎉");
+        ApiResponseDto response = new ApiResponseDto("회원가입 성공🎉", 200);
+        return ResponseEntity.ok(response);
     }
 
+
     @PostMapping("/user/login")
-    public ResponseEntity<String> login(@RequestBody @Valid LoginRequestDto requestDto, HttpServletResponse res)
-    {
+    public ResponseEntity<ApiResponseDto> login(@RequestBody @Valid LoginRequestDto requestDto, HttpServletResponse res) {
         try {
             userService.login(requestDto, res);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return ResponseEntity.ok("로그인 성공🎊");
+        ApiResponseDto response = new ApiResponseDto("로그인 성공🎊", 200);
+        return ResponseEntity.ok(response);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException ex) {
-        return ResponseEntity.badRequest().body(ex.getMessage());
+    public ResponseEntity<ApiResponseDto> handleIllegalArgumentException(IllegalArgumentException ex) {
+        ApiResponseDto response = new ApiResponseDto(ex.getMessage(), 400);
+        return ResponseEntity.badRequest().body(response);
     }
 }

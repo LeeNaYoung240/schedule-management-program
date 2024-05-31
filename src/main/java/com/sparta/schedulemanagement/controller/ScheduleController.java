@@ -1,5 +1,6 @@
 package com.sparta.schedulemanagement.controller;
 
+import com.sparta.schedulemanagement.dto.ApiResponseDto;
 import com.sparta.schedulemanagement.dto.ScheduleRequestDto;
 import com.sparta.schedulemanagement.dto.ScheduleResponseDto;
 import com.sparta.schedulemanagement.service.ScheduleService;
@@ -43,8 +44,10 @@ public class ScheduleController {
 
     // 선택 일정 삭제
     @DeleteMapping("/{scheduleId}")
-    public Long deleteSchedule(@PathVariable Long scheduleId, @RequestBody ScheduleRequestDto requestDto) {
-        return scheduleService.deleteSchedule(scheduleId, requestDto.getPassword());
+    public ResponseEntity<ApiResponseDto> deleteSchedule(@PathVariable Long scheduleId, @RequestBody ScheduleRequestDto requestDto) {
+        scheduleService.deleteSchedule(scheduleId, requestDto.getPassword());
+        ApiResponseDto response = new ApiResponseDto("게시글 삭제 성공🙆🏻‍♀️", 200);
+        return ResponseEntity.ok(response);
     }
 
     @RequestMapping(value = "/", method = {RequestMethod.GET, RequestMethod.PUT, RequestMethod.DELETE})
