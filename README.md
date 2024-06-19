@@ -285,8 +285,7 @@ https://github.com/LeeNaYoung240/schedule-management-program/assets/107848521/2f
 </div>
 </details>
 
-
-
+- 개인 : Controller, Service, Entity, DTO 레이어에 맞는 단위 테스트 작성
 
 </div>
 </details>
